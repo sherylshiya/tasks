@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head><title>Task Manager</title></head>
+<body>
+<h1>Tasks</h1>
+<a href="{{ url_for('add_task') }}">Add Task</a>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr><th>Title</th><th>Status</th><th>Attachment</th><th>Actions</th></tr>
+    {% for task in tasks %}
+    <tr>
+        <td>{{ task[1] }}</td>
+        <td>{{ task[2] }}</td>
+        <td>
+            {% if task[3] %}
+                <a href="{{ task[3] }}" target="_blank">Download</a>
+            {% else %}
+                No Attachment
+            {% endif %}
+        </td>
+        <td>
+            {% if task[2] != 'Completed' %}
+                <a href="{{ url_for('complete_task', task_id=task[0]) }}">Complete</a>
+            {% endif %}
+            <a href="{{ url_for('delete_task', task_id=task[0]) }}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
